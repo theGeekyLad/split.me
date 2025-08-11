@@ -23,7 +23,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
-import { Box } from "@mui/material";
+import { Box, Backdrop, CircularProgress } from "@mui/material";
 
 const Home = () => {
   const [dropdownValue, setDropdownValue] = useState('option1');
@@ -35,6 +35,7 @@ const Home = () => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
   });
+  const [loading, setLoading] = useState(false); // Set to true to show spinner
 
   const handleDarkModeToggle = () => {
     setDarkMode((prev) => {
@@ -78,6 +79,12 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'rgba(0,0,0,0.4)' }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Container>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
