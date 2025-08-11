@@ -79,7 +79,15 @@ const Home = () => {
   const multiSelectOptions = ['Apple', 'Banana', 'Cherry', 'Date'];
 
   useEffect(() => {
-    getGroups();
+    getGroups()
+      .then(data => {
+        // You can set state here if you want to use the groups data
+        // setGroups(data);
+        console.log('Groups:', data);
+      })
+      .catch(err => {
+        console.error('Failed to fetch groups:', err);
+      });
   }, []);
 
   return (
