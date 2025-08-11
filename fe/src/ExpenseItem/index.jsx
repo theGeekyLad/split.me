@@ -12,6 +12,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useMemo } from "react";
+import { useEffect } from "react";
 
 const ExpenseItem = ({
   input1,
@@ -23,16 +24,6 @@ const ExpenseItem = ({
   members,
   onDelete
 }) => {
-  const [wasTouched, setWasTouched] = useState(false);
-
-  const effectiveUserSelectValue = useMemo(() => {
-    if (!wasTouched) {
-      setWasTouched(true);
-      return members.map(m => m.id);
-    }
-    return userSelectValue;
-  }, [userSelectValue, members]);
-
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid size={6}>
@@ -66,7 +57,7 @@ const ExpenseItem = ({
             labelId="user-label"
             id="user"
             multiple
-            value={effectiveUserSelectValue}
+            value={userSelectValue}
             onChange={handleUserSelectChange}
             input={<OutlinedInput label="User" />}
             renderValue={(selected) =>
@@ -78,7 +69,7 @@ const ExpenseItem = ({
           >
             {members.map((option) => (
               <MenuItem key={option.id} value={option.id}>
-                <Checkbox checked={effectiveUserSelectValue.indexOf(option.id) > -1} />
+                <Checkbox checked={userSelectValue.indexOf(option) > -1} />
                 <ListItemText primary={option.first_name + (option.last_name ? ' ' + option.last_name : '')} />
               </MenuItem>
             ))}

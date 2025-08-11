@@ -92,13 +92,31 @@ const Home = () => {
   const handleAddExpenseItem = () => {
     setExpenseItems((prev) => [
       ...prev,
-      { input1: '', input2: '', userSelectValue: [] }
+      { input1: '', input2: '', userSelectValue: [...members] }
     ]);
   };
 
   useEffect(() => {
-    console.log('expenseItems', expenseItems);
-  }, [expenseItems]);
+    // Add global keydown listener for Alt+Enter and Alt+E
+    const handleKeyDown = (e) => {
+      if (e.altKey && (e.key === 'Enter' || e.keyCode === 13)) {
+        e.preventDefault();
+        setTimeout(() => {
+          handleAddExpenseItem();
+        }, 0);
+      } else if (e.altKey && (e.key === 'e' || e.key === 'E' || e.keyCode === 69)) {
+        e.preventDefault();
+        const itemFields = document.querySelectorAll('.item-name-field input');
+        if (itemFields.length > 0) {
+          itemFields[itemFields.length - 1].focus();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [members]);
 
   useEffect(() => {
     getGroups()
@@ -113,24 +131,6 @@ const Home = () => {
       .catch(err => {
         console.error('Failed to fetch groups:', err);
       });
-
-    // Add global keydown listener for Alt+Enter and Alt+E
-    const handleKeyDown = (e) => {
-      if (e.altKey && (e.key === 'Enter' || e.keyCode === 13)) {
-        e.preventDefault();
-        handleAddExpenseItem();
-      } else if (e.altKey && (e.key === 'e' || e.key === 'E' || e.keyCode === 69)) {
-        e.preventDefault();
-        const itemFields = document.querySelectorAll('.item-name-field input');
-        if (itemFields.length > 0) {
-          itemFields[itemFields.length - 1].focus();
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
   }, []);
 
   return (
@@ -200,7 +200,6 @@ const Home = () => {
             <ExpenseItem
               input1={item.input1}
               input2={item.input2}
-              userSelectValue={item.userSelectValue}
               handleInput1Change={e => handleExpenseItemChange(idx, 'input1', e.target.value)}
               handleInput2Change={e => handleExpenseItemChange(idx, 'input2', e.target.value)}
               handleUserSelectChange={e => handleUserSelectChange(idx, e)}
