@@ -130,6 +130,8 @@ const Home = () => {
       });
   }, []);
 
+  const getFullName = ({ first_name, last_name }) => `${first_name}${last_name ? ' ' + last_name : ''}`;
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -175,10 +177,13 @@ const Home = () => {
                   value={userDropdownValue}
                   label="User"
                   onChange={e => setUserDropdownValue(e.target.value)}
+                  renderValue={(selected) =>
+                    getFullName(selected)
+                  }
                 >
                   {members.map((option, idx) => (
-                    <MenuItem key={option.id || idx} value={option.id}>
-                      {option.first_name}{option.last_name ? ' ' + option.last_name : ''}
+                    <MenuItem key={option.id || idx} value={option}>
+                      {getFullName(option)}
                     </MenuItem>
                   ))}
                 </Select>
