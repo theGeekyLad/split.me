@@ -26,7 +26,17 @@ const Home = () => {
   const [input1, setInput1] = useState('');
   const [input2, setInput2] = useState('');
   const [userSelectValue, setuserSelectValue] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem('darkMode');
+    return stored === null ? false : stored === 'true';
+  });
+
+  const handleDarkModeToggle = () => {
+    setDarkMode((prev) => {
+      localStorage.setItem('darkMode', !prev);
+      return !prev;
+    });
+  };
 
   const theme = createTheme({
     palette: {
@@ -88,7 +98,7 @@ const Home = () => {
             </Grid>
             <Grid size={2}>
               <FormControlLabel
-                control={<Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />}
+                control={<Switch checked={darkMode} onChange={handleDarkModeToggle} />}
                 label={darkMode ? 'Dark' : 'Light'}
               />
             </Grid>
