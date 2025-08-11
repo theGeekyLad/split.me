@@ -28,7 +28,8 @@ import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 
 const Home = () => {
-  const [dropdownValue, setDropdownValue] = useState('option1');
+  const [dropdownValue, setDropdownValue] = useState('');
+  const [groupNames, setGroupNames] = useState([]);
   const [calendarValue, setCalendarValue] = useState(null);
   const [expenseItems, setExpenseItems] = useState([
     { input1: '', input2: '', userSelectValue: [] }
@@ -81,9 +82,12 @@ const Home = () => {
   useEffect(() => {
     getGroups()
       .then(data => {
-        // You can set state here if you want to use the groups data
-        // setGroups(data);
-        console.log('Groups:', data);
+        data = data.groups;
+        if (Array.isArray(data)) {
+          const names = data.map(g => g.name);
+          setGroupNames(names);
+          setDropdownValue(names[0] || '');
+        }
       })
       .catch(err => {
         console.error('Failed to fetch groups:', err);
@@ -120,9 +124,9 @@ const Home = () => {
                   label="Dropdown"
                   onChange={handleDropdownChange}
                 >
-                  <MenuItem value={'option1'}>Option 1</MenuItem>
-                  <MenuItem value={'option2'}>Option 2</MenuItem>
-                  <MenuItem value={'option3'}>Option 3</MenuItem>
+                  {groupNames.map((name, idx) => (
+                    <MenuItem key={idx} value={name}>{name}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
