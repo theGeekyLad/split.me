@@ -35,6 +35,7 @@ const Home = () => {
   const [expenseItems, setExpenseItems] = useState([
     { input1: '', input2: '', userSelectValue: [] }
   ]);
+  const [multiSelectOptions, setMultiSelectOptions] = useState(['Apple', 'Banana', 'Cherry', 'Date']);
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
@@ -61,12 +62,16 @@ const Home = () => {
     if (selectedGroup) {
       getGroupById(selectedGroup.id)
         .then(data => {
-          // Do something with the group details here
-          console.log('Group details:', data);
+          // Extract member names and set as multiSelectOptions
+          const members = data.group?.members || [];
+          const names = members.map(m => `${m.first_name}${m.last_name ? ' ' + m.last_name : ''}`);
+          setMultiSelectOptions(names);
         })
         .catch(err => {
           console.error('Failed to fetch group details:', err);
         });
+    } else {
+      setMultiSelectOptions([]);
     }
   };
 
@@ -90,7 +95,6 @@ const Home = () => {
     ]);
   };
 
-  const multiSelectOptions = ['Apple', 'Banana', 'Cherry', 'Date'];
 
   useEffect(() => {
     getGroups()
