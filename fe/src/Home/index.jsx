@@ -112,11 +112,17 @@ const Home = () => {
         console.error('Failed to fetch groups:', err);
       });
 
-    // Add global keydown listener for Alt+Enter
+    // Add global keydown listener for Alt+Enter and Alt+E
     const handleKeyDown = (e) => {
       if (e.altKey && (e.key === 'Enter' || e.keyCode === 13)) {
         e.preventDefault();
         handleAddExpenseItem();
+      } else if (e.altKey && (e.key === 'e' || e.key === 'E' || e.keyCode === 69)) {
+        e.preventDefault();
+        const itemFields = document.querySelectorAll('.item-name-field input');
+        if (itemFields.length > 0) {
+          itemFields[itemFields.length - 1].focus();
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);

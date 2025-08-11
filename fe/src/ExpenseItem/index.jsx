@@ -38,6 +38,7 @@ const ExpenseItem = ({
       <Grid size={6}>
         <TextField
           fullWidth
+          className="item-name-field"
           label="Item"
           variant="outlined"
           type="text"
