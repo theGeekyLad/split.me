@@ -20,7 +20,7 @@ const ExpenseItem = ({
   handleInput1Change,
   handleInput2Change,
   handleUserSelectChange,
-  multiSelectOptions,
+  members,
   onDelete
 }) => {
   const [wasTouched, setWasTouched] = useState(false);
@@ -28,10 +28,10 @@ const ExpenseItem = ({
   const effectiveUserSelectValue = useMemo(() => {
     if (!wasTouched) {
       setWasTouched(true);
-      return multiSelectOptions.map(m => m.id);
+      return members.map(m => m.id);
     }
     return userSelectValue;
-  }, [userSelectValue, multiSelectOptions]);
+  }, [userSelectValue, members]);
 
   return (
     <Grid container spacing={2} alignItems="center">
@@ -70,13 +70,13 @@ const ExpenseItem = ({
             onChange={handleUserSelectChange}
             input={<OutlinedInput label="User" />}
             renderValue={(selected) =>
-              multiSelectOptions
+              members
                 .filter(option => selected.includes(option.id))
                 .map(option => option.first_name + (option.last_name ? ' ' + option.last_name : ''))
                 .join(', ')
             }
           >
-            {multiSelectOptions.map((option) => (
+            {members.map((option) => (
               <MenuItem key={option.id} value={option.id}>
                 <Checkbox checked={effectiveUserSelectValue.indexOf(option.id) > -1} />
                 <ListItemText primary={option.first_name + (option.last_name ? ' ' + option.last_name : '')} />

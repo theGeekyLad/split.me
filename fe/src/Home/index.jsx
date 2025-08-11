@@ -33,7 +33,7 @@ const Home = () => {
   const [groups, setGroups] = useState([]);
   const [calendarValue, setCalendarValue] = useState(null);
   const [expenseItems, setExpenseItems] = useState([]);
-  const [multiSelectOptions, setMultiSelectOptions] = useState([]);
+  const [members, setMembers] = useState([]);
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
@@ -64,15 +64,15 @@ const Home = () => {
     if (selectedGroup) {
       getGroupById(selectedGroup.id)
         .then(data => {
-          // Extract member names and set as multiSelectOptions
+          // Extract member names and set as members
           const members = data.group?.members || [];
-          setMultiSelectOptions(members);
+          setMembers(members);
         })
         .catch(err => {
           console.error('Failed to fetch group details:', err);
         });
     } else {
-      setMultiSelectOptions([]);
+      setMembers([]);
     }
   };
 
@@ -96,6 +96,9 @@ const Home = () => {
     ]);
   };
 
+  useEffect(() => {
+    console.log('expenseItems', expenseItems);
+  }, [expenseItems]);
 
   useEffect(() => {
     getGroups()
@@ -176,7 +179,7 @@ const Home = () => {
                   label="User"
                   onChange={e => setUserDropdownValue(e.target.value)}
                 >
-                  {multiSelectOptions.map((option, idx) => (
+                  {members.map((option, idx) => (
                     <MenuItem key={option.id || idx} value={option.id}>
                       {option.first_name}{option.last_name ? ' ' + option.last_name : ''}
                     </MenuItem>
@@ -201,7 +204,7 @@ const Home = () => {
               handleInput1Change={e => handleExpenseItemChange(idx, 'input1', e.target.value)}
               handleInput2Change={e => handleExpenseItemChange(idx, 'input2', e.target.value)}
               handleUserSelectChange={e => handleUserSelectChange(idx, e)}
-              multiSelectOptions={multiSelectOptions}
+              members={members}
               onDelete={() => setExpenseItems(items => items.filter((_, i) => i !== idx))}
             />
           </Box>
