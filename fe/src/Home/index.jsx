@@ -66,8 +66,7 @@ const Home = () => {
         .then(data => {
           // Extract member names and set as multiSelectOptions
           const members = data.group?.members || [];
-          const names = members.map(m => `${m.first_name}${m.last_name ? ' ' + m.last_name : ''}`);
-          setMultiSelectOptions(names);
+          setMultiSelectOptions(members);
         })
         .catch(err => {
           console.error('Failed to fetch group details:', err);
@@ -178,7 +177,9 @@ const Home = () => {
                   onChange={e => setUserDropdownValue(e.target.value)}
                 >
                   {multiSelectOptions.map((option, idx) => (
-                    <MenuItem key={idx} value={option}>{option}</MenuItem>
+                    <MenuItem key={option.id || idx} value={option.id}>
+                      {option.first_name}{option.last_name ? ' ' + option.last_name : ''}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
