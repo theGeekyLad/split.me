@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -35,7 +36,7 @@ const Home = () => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
   });
-  const [loading, setLoading] = useState(false); // Set to true to show spinner
+  const loading = useSelector(state => state.progress.visible);
 
   const handleDarkModeToggle = () => {
     setDarkMode((prev) => {
