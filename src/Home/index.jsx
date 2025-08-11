@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 
 import Container from '@mui/material/Container';
@@ -20,6 +20,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
+import { getGroups } from '../services';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -76,6 +77,10 @@ const Home = () => {
   };
 
   const multiSelectOptions = ['Apple', 'Banana', 'Cherry', 'Date'];
+
+  useEffect(() => {
+    getGroups();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
