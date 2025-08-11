@@ -38,6 +38,8 @@ const Home = () => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
   });
+  // State for the new dropdown
+  const [userDropdownValue, setUserDropdownValue] = useState('');
   const loading = useSelector(state => state.progress.visible);
 
   const handleDarkModeToggle = () => {
@@ -131,7 +133,7 @@ const Home = () => {
                 slotProps={{ textField: { fullWidth: true } }}
               />
             </Grid>
-            <Grid size={8}>
+            <Grid size={5}>
               <FormControl fullWidth>
                 <InputLabel id="dropdown-label">Dropdown</InputLabel>
                 <Select
@@ -143,6 +145,22 @@ const Home = () => {
                 >
                   {groupNames.map((name, idx) => (
                     <MenuItem key={idx} value={name}>{name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={3}>
+              <FormControl fullWidth>
+                <InputLabel id="user-dropdown-label">Who Am I</InputLabel>
+                <Select
+                  labelId="user-dropdown-label"
+                  id="user-dropdown"
+                  value={userDropdownValue}
+                  label="User"
+                  onChange={e => setUserDropdownValue(e.target.value)}
+                >
+                  {multiSelectOptions.map((option, idx) => (
+                    <MenuItem key={idx} value={option}>{option}</MenuItem>
                   ))}
                 </Select>
               </FormControl>
