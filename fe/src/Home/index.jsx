@@ -20,7 +20,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
-import { getGroups } from '../services';
+import { getGroups, getGroupById } from '../services';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -30,6 +30,7 @@ import { Box, Backdrop, CircularProgress } from "@mui/material";
 const Home = () => {
   const [dropdownValue, setDropdownValue] = useState('');
   const [groupNames, setGroupNames] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [calendarValue, setCalendarValue] = useState(null);
   const [expenseItems, setExpenseItems] = useState([
     { input1: '', input2: '', userSelectValue: [] }
@@ -54,7 +55,19 @@ const Home = () => {
   });
 
   const handleDropdownChange = (event) => {
-    setDropdownValue(event.target.value);
+    const selectedName = event.target.value;
+    setDropdownValue(selectedName);
+    const selectedGroup = groups.find(g => g.name === selectedName);
+    if (selectedGroup) {
+      getGroupById(selectedGroup.id)
+        .then(data => {
+          // Do something with the group details here
+          console.log('Group details:', data);
+        })
+        .catch(err => {
+          console.error('Failed to fetch group details:', err);
+        });
+    }
   };
 
   const handleExpenseItemChange = (idx, field, value) => {
@@ -82,11 +95,11 @@ const Home = () => {
   useEffect(() => {
     getGroups()
       .then(data => {
-        data = data.groups;
-        if (Array.isArray(data)) {
-          const names = data.map(g => g.name);
+        const groupArr = data.groups;
+        if (Array.isArray(groupArr)) {
+          setGroups(groupArr);
+          const names = groupArr.map(g => g.name);
           setGroupNames(names);
-          setDropdownValue(names[0] || '');
         }
       })
       .catch(err => {
