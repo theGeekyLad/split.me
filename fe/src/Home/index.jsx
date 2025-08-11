@@ -111,6 +111,18 @@ const Home = () => {
       .catch(err => {
         console.error('Failed to fetch groups:', err);
       });
+
+    // Add global keydown listener for Alt+Enter
+    const handleKeyDown = (e) => {
+      if (e.altKey && (e.key === 'Enter' || e.keyCode === 13)) {
+        e.preventDefault();
+        handleAddExpenseItem();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (
@@ -194,7 +206,7 @@ const Home = () => {
             </Button>
           </Grid>
           <Grid>
-            <Button variant="text" onClick={() => {}}>
+            <Button variant="text" onClick={() => { }}>
               Submit
             </Button>
           </Grid>
