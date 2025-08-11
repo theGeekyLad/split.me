@@ -169,10 +169,15 @@ const Home = () => {
             />
           </Box>
         ))}
-        <Grid container sx={{ mt: 2 }}>
+        <Grid container sx={{ mt: 2 }} spacing={2} alignItems="center">
           <Grid>
             <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleAddExpenseItem}>
               Add
+            </Button>
+          </Grid>
+          <Grid>
+            <Button variant="text" onClick={() => {}}>
+              Submit
             </Button>
           </Grid>
         </Grid>
