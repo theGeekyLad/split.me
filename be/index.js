@@ -22,6 +22,21 @@ app.get('/get_groups', async (req, res) => {
   }
 });
 
+
+app.get('/get_group/:id', async (req, res) => {
+  const groupId = req.params.id;
+  try {
+    const response = await axios.get(`${API_URL}/api/v3.0/get_group/${groupId}`, {
+      headers: {
+        Authorization: `Bearer ${BEARER_TOKEN}`,
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

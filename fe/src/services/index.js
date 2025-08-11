@@ -14,3 +14,15 @@ export const getGroups = async () => {
     store.dispatch(hideProgress());
   }
 };
+
+export const getGroupById = async (id) => {
+  try {
+    store.dispatch(showProgress());
+    const response = await axios.get(`${API_URL}/get_group/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  } finally {
+    store.dispatch(hideProgress());
+  }
+};
