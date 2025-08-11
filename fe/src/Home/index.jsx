@@ -200,6 +200,7 @@ const Home = () => {
             <ExpenseItem
               input1={item.input1}
               input2={item.input2}
+              userSelectValue={item.userSelectValue}
               handleInput1Change={e => handleExpenseItemChange(idx, 'input1', e.target.value)}
               handleInput2Change={e => handleExpenseItemChange(idx, 'input2', e.target.value)}
               handleUserSelectChange={e => handleUserSelectChange(idx, e)}

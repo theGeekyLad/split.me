@@ -62,13 +62,13 @@ const ExpenseItem = ({
             input={<OutlinedInput label="User" />}
             renderValue={(selected) =>
               members
-                .filter(option => selected.includes(option.id))
+                .filter(option => selected.includes(option))
                 .map(option => option.first_name + (option.last_name ? ' ' + option.last_name : ''))
                 .join(', ')
             }
           >
             {members.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
+              <MenuItem key={option.id} value={option}>
                 <Checkbox checked={userSelectValue.indexOf(option) > -1} />
                 <ListItemText primary={option.first_name + (option.last_name ? ' ' + option.last_name : '')} />
               </MenuItem>
