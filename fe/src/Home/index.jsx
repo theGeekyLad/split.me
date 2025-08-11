@@ -32,10 +32,8 @@ const Home = () => {
   const [groupNames, setGroupNames] = useState([]);
   const [groups, setGroups] = useState([]);
   const [calendarValue, setCalendarValue] = useState(null);
-  const [expenseItems, setExpenseItems] = useState([
-    { input1: '', input2: '', userSelectValue: [] }
-  ]);
-  const [multiSelectOptions, setMultiSelectOptions] = useState(['Apple', 'Banana', 'Cherry', 'Date']);
+  const [expenseItems, setExpenseItems] = useState([]);
+  const [multiSelectOptions, setMultiSelectOptions] = useState([]);
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
@@ -56,6 +54,8 @@ const Home = () => {
   });
 
   const handleDropdownChange = (event) => {
+    setExpenseItems([]); // refresh
+
     const selectedName = event.target.value;
     setDropdownValue(selectedName);
     const selectedGroup = groups.find(g => g.name === selectedName);
