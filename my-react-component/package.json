@@ -1,0 +1,22 @@
+{
+  "name": "my-react-component",
+  "version": "1.0.0",
+  "description": "A simple React component project.",
+  "main": "src/index.jsx",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "react-scripts": "4.0.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
