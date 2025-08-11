@@ -15,6 +15,18 @@ export const getGroups = async () => {
   }
 };
 
+export const createExpense = async (expenseData) => {
+  try {
+    store.dispatch(showProgress());
+    const response = await axios.post(`${API_URL}/create_expense`, expenseData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  } finally {
+    store.dispatch(hideProgress());
+  }
+};
+
 export const getGroupById = async (id) => {
   try {
     store.dispatch(showProgress());

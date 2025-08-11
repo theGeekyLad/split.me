@@ -37,6 +37,25 @@ app.get('/get_group/:id', async (req, res) => {
   }
 });
 
+
+app.post('/create_expense', async (req, res) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/v3.0/create_expense`,
+      req.body,
+      {
+        headers: {
+          Authorization: `Bearer ${BEARER_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
