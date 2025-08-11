@@ -28,7 +28,7 @@ import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 
 const Home = () => {
-  const [dropdownValue, setDropdownValue] = useState('');
+  const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
   const [calendarValue, setCalendarValue] = useState(null);
   const [expenseItems, setExpenseItems] = useState([]);
@@ -54,11 +54,11 @@ const Home = () => {
     },
   });
 
-  const handleDropdownChange = (event) => {
+  const handleGroupChange = (event) => {
     setExpenseItems([]); // refresh
 
     const _selectedGroup = event.target.value;
-    setDropdownValue(_selectedGroup);
+    setGroup(_selectedGroup);
     const selectedGroup = groups.find(g => g.name === _selectedGroup.name);
     if (selectedGroup) {
       getGroupById(selectedGroup.id)
@@ -152,13 +152,13 @@ const Home = () => {
             </Grid>
             <Grid size={5}>
               <FormControl fullWidth>
-                <InputLabel id="dropdown-label">Dropdown</InputLabel>
+                <InputLabel id="group-label">Group</InputLabel>
                 <Select
-                  labelId="dropdown-label"
-                  id="dropdown"
-                  value={dropdownValue.name}
-                  label="Dropdown"
-                  onChange={handleDropdownChange}
+                  labelId="group-label"
+                  id="group"
+                  value={group.name}
+                  label="Group"
+                  onChange={handleGroupChange}
                 >
                   {groups.map((group, idx) => (
                     <MenuItem key={idx} value={group}>{group.name}</MenuItem>
