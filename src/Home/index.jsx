@@ -16,16 +16,21 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
+import ExpenseItem from '../ExpenseItem';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Button from '@mui/material/Button';
+import { Box } from "@mui/material";
 
 const Home = () => {
   const [dropdownValue, setDropdownValue] = useState('option1');
   const [calendarValue, setCalendarValue] = useState(null);
-  const [input1, setInput1] = useState('');
-  const [input2, setInput2] = useState('');
-  const [userSelectValue, setuserSelectValue] = useState([]);
+  const [expenseItems, setExpenseItems] = useState([
+    { input1: '', input2: '', userSelectValue: [] }
+  ]);
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
@@ -48,20 +53,24 @@ const Home = () => {
     setDropdownValue(event.target.value);
   };
 
-  const handleInput1Change = (event) => {
-    setInput1(event.target.value);
-  };
-
-  const handleInput2Change = (event) => {
-    setInput2(event.target.value);
-  };
-
-  const handleUserSelectChange = (event) => {
-    const { value } = event.target;
-    setuserSelectValue(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+  const handleExpenseItemChange = (idx, field, value) => {
+    setExpenseItems((prev) =>
+      prev.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      )
     );
+  };
+
+  const handleUserSelectChange = (idx, event) => {
+    const { value } = event.target;
+    handleExpenseItemChange(idx, 'userSelectValue', typeof value === 'string' ? value.split(',') : value);
+  };
+
+  const handleAddExpenseItem = () => {
+    setExpenseItems((prev) => [
+      ...prev,
+      { input1: '', input2: '', userSelectValue: [] }
+    ]);
   };
 
   const multiSelectOptions = ['Apple', 'Banana', 'Cherry', 'Date'];
@@ -104,50 +113,25 @@ const Home = () => {
             </Grid>
           </Grid>
         </LocalizationProvider>
-        <Grid container spacing={2}>
-          <Grid size={6}>
-            <TextField
-              fullWidth
-              label="Item"
-              variant="outlined"
-              type="text"
-              value={input1}
-              onChange={handleInput1Change}
+        {expenseItems.map((item, idx) => (
+          <Box sx={{ mb: 2 }} key={idx}>
+            <ExpenseItem
+              input1={item.input1}
+              input2={item.input2}
+              userSelectValue={item.userSelectValue}
+              handleInput1Change={e => handleExpenseItemChange(idx, 'input1', e.target.value)}
+              handleInput2Change={e => handleExpenseItemChange(idx, 'input2', e.target.value)}
+              handleUserSelectChange={e => handleUserSelectChange(idx, e)}
+              multiSelectOptions={multiSelectOptions}
+              onDelete={() => setExpenseItems(items => items.filter((_, i) => i !== idx))}
             />
-          </Grid>
-          <Grid size={2}>
-            <TextField
-              fullWidth
-              label="Cost"
-              variant="outlined"
-              type="number"
-              value={input2}
-              onChange={handleInput2Change}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">$</InputAdornment>,
-              }}
-            />
-          </Grid>
-          <Grid size={4}>
-            <FormControl fullWidth>
-              <InputLabel id="user-label">User</InputLabel>
-              <Select
-                labelId="user-label"
-                id="user"
-                multiple
-                value={userSelectValue}
-                onChange={handleUserSelectChange}
-                input={<OutlinedInput label="User" />}
-                renderValue={(selected) => selected.join(', ')}
-              >
-                {multiSelectOptions.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    <Checkbox checked={userSelectValue.indexOf(option) > -1} />
-                    <ListItemText primary={option} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          </Box>
+        ))}
+        <Grid container sx={{ mt: 2 }}>
+          <Grid>
+            <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleAddExpenseItem}>
+              Add
+            </Button>
           </Grid>
         </Grid>
       </Container>
