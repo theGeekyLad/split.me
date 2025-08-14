@@ -12,25 +12,23 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
 import { getGroups, getGroupById, createExpense } from '../services';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 
 const Home = () => {
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
-  const [calendarValue, setCalendarValue] = useState(null);
+  const [calendarValue, setCalendarValue] = useState(dayjs());
   const [expenseItems, setExpenseItems] = useState([]);
   const [members, setMembers] = useState([]);
   const [darkMode, setDarkMode] = useState(() => {
@@ -127,14 +125,20 @@ const Home = () => {
 
     console.log('Expenses to submit:', expenses);
 
+    var finalStatus = 200;
+
     expenses.forEach(async (expense) => {
       try {
         const res = await createExpense(expense);
-        console.log('Expense created:', res);
+        console.log('createExpense success:', res);
+        finalStatus = res.status;
       } catch (err) {
-        console.error('Failed to create expense:', err);
+        console.error('createExpense fail:', err);
+        finalStatus = err.response.status;
       }
     });
+
+    setSnackbar({ open: true, message: finalStatus.toString(), severity: finalStatus === 200 ? 'success' : 'error' });
   }
 
   useEffect(() => {
@@ -158,6 +162,21 @@ const Home = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [members]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && (e.key === 'Enter' || e.keyCode === 13)) {
+        e.preventDefault();
+        setTimeout(() => {
+          handleExpenseSubmit();
+        }, 0);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [expenseItems]);
 
   useEffect(() => {
     getGroups()
@@ -266,6 +285,20 @@ const Home = () => {
           </Grid>
         </Grid>
       </Container>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setSnackbar(s => ({ ...s, open: false }))}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSnackbar(s => ({ ...s, open: false }))}
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 };

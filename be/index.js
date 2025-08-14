@@ -18,9 +18,11 @@ app.get('/get_groups', async (req, res) => {
         Authorization: `Bearer ${BEARER_TOKEN}`,
       },
     });
-    res.json(response.data);
+    res.status(response.status).json(response.data);
+    logPretty('get_groups success:', response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(error.response.status).json({});
+    logPretty('get_groups fail:', error);
   }
 });
 
@@ -33,9 +35,10 @@ app.get('/get_group/:id', async (req, res) => {
         Authorization: `Bearer ${BEARER_TOKEN}`,
       },
     });
-    res.json(response.data);
+    res.status(response.status).json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(error.response.status).json({});
+    logPretty('get_group/:id fail:', error);
   }
 });
 
@@ -52,12 +55,18 @@ app.post('/create_expense', async (req, res) => {
         },
       }
     );
-    res.json(response.data);
+    res.status(response.status).json(response.data);
+    logPretty('Expense created successfully:', response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(error.response.status).json({});
+    logPretty('Error creating expense:', error);
   }
 });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+function logPretty(message, data) {
+  console.log(`${message}\n${data}\n\n`);
+}
