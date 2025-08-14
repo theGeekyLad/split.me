@@ -23,6 +23,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress } from "@mui/material";
+import Typography from '@mui/material/Typography';
 
 const Home = () => {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
@@ -203,6 +204,11 @@ const Home = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Container>
+        <Box sx={{ mt: 4, mb: 2, textAlign: 'center' }}>
+          <Typography variant="h4" component="h4">
+            Split.me
+          </Typography>
+        </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
             <Grid size={2}>
