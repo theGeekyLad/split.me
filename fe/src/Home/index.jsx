@@ -305,6 +305,11 @@ const Home = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
+      <Box sx={{ width: '100%', textAlign: 'center', py: 2, position: 'fixed', bottom: 0, left: 0, bgcolor: 'background.paper' }}>
+        <Typography variant="overline" color="text.secondary">
+          Made with <span style={{ color: 'red' }}>❤️</span> by thegeekylad
+        </Typography>
+      </Box>
     </ThemeProvider>
   );
 };
