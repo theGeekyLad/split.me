@@ -118,6 +118,13 @@ const Home = () => {
         expense[`users__${i}__owed_share`] = share.toString();
       });
 
+      // author does not owe anything
+      if (e.userSelectValue.find(u => u.id === userDropdownValue.id) === undefined) {
+        expense[`users__${e.userSelectValue.length}__user_id`] = userDropdownValue.id;
+        expense[`users__${e.userSelectValue.length}__paid_share`] = total.toString();
+        expense[`users__${e.userSelectValue.length}__owed_share`] = "0";
+      }
+
       const randomMember = Math.floor(Math.random() * (e.userSelectValue.length));
       expense[`users__${randomMember}__owed_share`] = (parseFloat(expense[`users__${randomMember}__owed_share`]) + d).toString();
 
@@ -177,7 +184,7 @@ const Home = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [expenseItems]);
+  }, [expenseItems, calendarValue]);
 
   useEffect(() => {
     getGroups()
