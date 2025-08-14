@@ -95,6 +95,39 @@ const Home = () => {
     ]);
   };
 
+  const handleExpenseSubmit = () => {
+    const expenses = expenseItems.flatMap(e => {
+      if (e.input2 === '' || e.input1 === '' || e.userSelectValue.length === 0)
+        return []; // Skip invalid items
+
+      const expense = {
+        cost: e.input2,
+        description: e.input1,
+        date: calendarValue.format(),
+        repeat_interval: "never",
+        currency_code: "USD",
+        group_id: group.id,
+      }
+
+      const total = parseFloat(e.input2).toFixed(2);
+      const share = (total / e.userSelectValue.length).toFixed(2);
+      const d = total - share * e.userSelectValue.length;
+
+      e.userSelectValue.map((user, i) => {
+        expense[`users__${i}__user_id`] = user.id;
+        expense[`users__${i}__paid_share`] = (user.id === userDropdownValue.id) ? total.toString() : "0";
+        expense[`users__${i}__owed_share`] = share.toString();
+      });
+
+      const randomMember = Math.floor(Math.random() * (e.userSelectValue.length));
+      expense[`users__${randomMember}__owed_share`] = (parseFloat(expense[`users__${randomMember}__owed_share`]) + d).toString();
+
+      return [expense];
+    });
+
+    console.log('Expenses to submit:', expenses);
+  }
+
   useEffect(() => {
     // Add global keydown listener for Alt+Enter and Alt+E
     const handleKeyDown = (e) => {
@@ -218,7 +251,7 @@ const Home = () => {
             </Button>
           </Grid>
           <Grid>
-            <Button variant="text" onClick={() => { }}>
+            <Button variant="text" onClick={handleExpenseSubmit}>
               Submit
             </Button>
           </Grid>
