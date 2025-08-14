@@ -20,7 +20,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
-import { getGroups, getGroupById } from '../services';
+import { getGroups, getGroupById, createExpense } from '../services';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -126,6 +126,15 @@ const Home = () => {
     });
 
     console.log('Expenses to submit:', expenses);
+
+    expenses.forEach(async (expense) => {
+      try {
+        const res = await createExpense(expense);
+        console.log('Expense created:', res);
+      } catch (err) {
+        console.error('Failed to create expense:', err);
+      }
+    });
   }
 
   useEffect(() => {
