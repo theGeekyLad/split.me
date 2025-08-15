@@ -2,6 +2,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TODOs
+
+- [ ] Show instantaneous total
+- [ ] Scroll to bottom on Alt + E
+
 ## Available Scripts
 
 In the project directory, you can run:
