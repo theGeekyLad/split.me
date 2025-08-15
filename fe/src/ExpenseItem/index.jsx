@@ -42,7 +42,7 @@ const ExpenseItem = ({
           fullWidth
           label="Cost"
           variant="outlined"
-          type="number"
+          type="text"
           value={input2}
           onChange={handleInput2Change}
           InputProps={{

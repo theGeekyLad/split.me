@@ -99,8 +99,10 @@ const Home = () => {
       if (e.input2 === '' || e.input1 === '' || e.userSelectValue.length === 0)
         return []; // Skip invalid items
 
+      const total = eval(e.input2).toFixed(2);
+
       const expense = {
-        cost: e.input2,
+        cost: total.toString(),
         description: e.input1,
         date: calendarValue.format(),
         repeat_interval: "never",
@@ -108,7 +110,6 @@ const Home = () => {
         group_id: group.id,
       }
 
-      const total = parseFloat(e.input2).toFixed(2);
       const share = (total / e.userSelectValue.length).toFixed(2);
       const d = total - share * e.userSelectValue.length;
 
