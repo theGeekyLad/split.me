@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## TODOs
 
 - [ ] Show instantaneous total
-- [ ] Scroll to bottom on Alt + E
+- [x] Scroll to bottom on Alt + E
 
 ## Available Scripts
 

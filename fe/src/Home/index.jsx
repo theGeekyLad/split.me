@@ -164,6 +164,12 @@ const Home = () => {
         if (itemFields.length > 0) {
           itemFields[itemFields.length - 1].focus();
         }
+        setTimeout(() => {
+          window.scrollTo({
+            top: window.outerHeight,
+            behavior: "smooth",
+          });
+        }, 0);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
