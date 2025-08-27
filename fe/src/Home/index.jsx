@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
+import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
@@ -26,6 +27,7 @@ import { Box, Backdrop, CircularProgress } from "@mui/material";
 import Typography from '@mui/material/Typography';
 
 const Home = () => {
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('apiKey') || '');
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
@@ -222,6 +224,19 @@ const Home = () => {
           <Typography variant="h4" component="h4">
             Split.me
           </Typography>
+        </Box>
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
+          <TextField
+            fullWidth
+            label="API Key"
+            variant="outlined"
+            type="text"
+            value={apiKey}
+            onChange={e => {
+              setApiKey(e.target.value);
+              localStorage.setItem('apiKey', e.target.value);
+            }}
+          />
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
