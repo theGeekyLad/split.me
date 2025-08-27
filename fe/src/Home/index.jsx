@@ -235,6 +235,7 @@ const Home = () => {
             onChange={e => {
               setApiKey(e.target.value);
               localStorage.setItem('apiKey', e.target.value);
+              setSnackbar({ open: true, message: "Reload page to see changes", severity: 'info' });
             }}
           />
         </Box>
