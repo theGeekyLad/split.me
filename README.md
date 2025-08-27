@@ -1,8 +1,22 @@
 # Split.me
 
-Split expenses like a pro through a Splitwise wrapper that leverages a spreadsheet-like interface to bulk-upload entries without having to itemize.
+Split expenses like a pro through a Splitwise wrapper that leverages a spreadsheet-like interface to bulk-upload entries without having to itemize. 
+
+**And it can be driven entirely by the keyboard!**
 
 ![Demo GIF](./demo.gif)
+
+## Keyboard Shortcuts
+
+| Keys | Action |
+| --- | --- |
+| `Alt + Enter` | Add a new row (expense item) |
+| `Alt + E` | Focus on the latest expense's name field |
+| `Tab` | Move to the next field |
+| `Shift + Tab` | Move to the previous field |
+| `Spacebar` | Open a dropdown / tap on a button |
+| `Up`, `Down`, `Left`, `Right` | Navigate dropdown items |
+| `Enter` | Select a dropdown item / select a button |
 
 ## Setup
 
@@ -39,5 +53,5 @@ Yes! We can get careless. Clearly, that's the disadvantage of itemizing stuff --
 - [x] Scroll to bottom on `Alt + E`
 - [ ] Deploy for quick access
 - [x] Field for API key input
-- [ ] Include a GIF in the README
-- [ ] List the support keyboard shortcuts
+- [x] Include a GIF in the README
+- [x] List the support keyboard shortcuts
