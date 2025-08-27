@@ -321,7 +321,7 @@ const Home = () => {
       </Snackbar>
       <Box sx={{ width: '100%', textAlign: 'center', py: 2, position: 'fixed', bottom: 0, left: 0, bgcolor: 'background.paper' }}>
         <Typography variant="body2" color="text.secondary">
-          Vibe coded with <span style={{ color: 'red' }}>❤️</span> by theGeekyLad
+          Made with <span style={{ color: 'red' }}>❤️</span> by theGeekyLad
         </Typography>
       </Box>
     </ThemeProvider>
