@@ -2,9 +2,7 @@
 
 Split expenses like a pro through a Splitwise wrapper that leverages a spreadsheet-like interface to bulk-upload entries without having to itemize. 
 
-_**It can be driven ENTIRELY by the keyboard!**_
-
-_Psst ... there's support for **dark mode** too._
+_**Highlight**: It can be driven ENTIRELY by the keyboard and there's support for dark mode too!_
 
 ![Demo GIF](./demo.gif)
 
