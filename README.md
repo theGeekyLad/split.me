@@ -36,7 +36,8 @@ Yes! We can get careless. Clearly, that's the disadvantage of itemizing stuff --
 ## TODOs
 
 - [ ] Show instantaneous total
-- [x] Scroll to bottom on Alt + E
+- [x] Scroll to bottom on `Alt + E`
 - [ ] Deploy for quick access
 - [x] Field for API key input
 - [ ] Include a GIF in the README
+- [ ] List the support keyboard shortcuts
