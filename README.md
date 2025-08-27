@@ -2,7 +2,7 @@
 
 Split expenses like a pro through a Splitwise wrapper that leverages a spreadsheet-like interface to bulk-upload entries without having to itemize.
 
-_A GIF here is a WIP. :D_
+![Demo GIF](./demo.gif)
 
 ## Setup
 
