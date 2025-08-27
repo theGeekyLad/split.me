@@ -4,6 +4,13 @@ Split expenses like a pro through a Splitwise wrapper that leverages a spreadshe
 
 _A GIF here is a WIP. :D_
 
+## Setup
+
+* Open a terminal
+    * `cd be/ && node index.js`
+* Open another terminal
+    * `cd fe/ && npm start`
+
 ## Motivation
 
 **tl;dr Gaps in Splitwise that Split.me addresses:**
