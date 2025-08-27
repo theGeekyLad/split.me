@@ -62,7 +62,7 @@ const Home = () => {
     setGroup(_selectedGroup);
     const selectedGroup = groups.find(g => g.name === _selectedGroup.name);
     if (selectedGroup) {
-      getGroupById(selectedGroup.id)
+      getGroupById(selectedGroup.id, apiKey)
         .then(data => {
           // Extract member names and set as members
           const members = data.group?.members || [];
@@ -140,7 +140,7 @@ const Home = () => {
 
     expenses.forEach(async (expense) => {
       try {
-        const res = await createExpense(expense);
+        const res = await createExpense(expense, apiKey);
         console.log('createExpense success:', res);
         finalStatus = res.status;
       } catch (err) {
@@ -196,7 +196,7 @@ const Home = () => {
   }, [expenseItems, calendarValue]);
 
   useEffect(() => {
-    getGroups()
+    getGroups(apiKey)
       .then(data => {
         const groupArr = data.groups;
         if (Array.isArray(groupArr)) {
