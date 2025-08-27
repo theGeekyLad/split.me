@@ -6,10 +6,10 @@ _A GIF here is a WIP. :D_
 
 ## Setup
 
-* Open a terminal
-    * `cd be/ && node index.js`
-* Open another terminal
-    * `cd fe/ && npm start`
+* Run the backend
+    * Open a terminal: `cd be/ && node index.js`
+* Run the frontend
+    * Open a terminal: `cd fe/ && npm start`
 
 ## Motivation
 
