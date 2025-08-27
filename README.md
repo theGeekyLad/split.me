@@ -6,10 +6,14 @@ _A GIF here is a WIP. :D_
 
 ## Setup
 
-* Run the backend
-    * `cd be/ && node index.js`
-* Run the frontend
-    * `cd fe/ && npm start`
+* Run the backend:
+    * `cd be/`
+    * `npm i`: Install dependencies
+    * `node index.js`
+* Run the frontend:
+    * `cd fe/`
+    * `npm i`: Install dependencies
+    * `npm start`
 
 ## Motivation
 
