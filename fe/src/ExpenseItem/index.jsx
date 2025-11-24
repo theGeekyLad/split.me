@@ -26,7 +26,7 @@ const ExpenseItem = ({
 }) => {
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid size={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <TextField
           fullWidth
           className="item-name-field"
@@ -37,7 +37,7 @@ const ExpenseItem = ({
           onChange={handleInput1Change}
         />
       </Grid>
-      <Grid size={2}>
+      <Grid size={{xs: 12, md: 2}}>
         <TextField
           fullWidth
           label="Cost"
@@ -50,7 +50,7 @@ const ExpenseItem = ({
           }}
         />
       </Grid>
-      <Grid size={3}>
+      <Grid size={{xs: 12, md: 3}}>
         <FormControl fullWidth>
           <InputLabel id="user-label">User</InputLabel>
           <Select
@@ -76,7 +76,7 @@ const ExpenseItem = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid size={1}>
+      <Grid size={{xs: 12, md: 1}}>
         <IconButton onClick={onDelete} aria-label="delete">
           <DeleteIcon />
         </IconButton>

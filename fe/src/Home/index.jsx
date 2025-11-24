@@ -241,7 +241,7 @@ const Home = () => {
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
-            <Grid size={2}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <DatePicker
                 label="Select Date"
                 value={calendarValue}
@@ -249,7 +249,7 @@ const Home = () => {
                 slotProps={{ textField: { fullWidth: true } }}
               />
             </Grid>
-            <Grid size={5}>
+            <Grid size={{ xs: 6, md: 5 }}>
               <FormControl fullWidth>
                 <InputLabel id="group-label">Group</InputLabel>
                 <Select
@@ -265,7 +265,7 @@ const Home = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={3}>
+            <Grid size={{ xs: 6, md: 3 }}>
               <FormControl fullWidth>
                 <InputLabel id="user-dropdown-label">Who Am I</InputLabel>
                 <Select
@@ -286,7 +286,7 @@ const Home = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={2}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <FormControlLabel
                 control={<Switch checked={darkMode} onChange={handleDarkModeToggle} />}
                 label={darkMode ? 'Dark' : 'Light'}
@@ -308,7 +308,7 @@ const Home = () => {
             />
           </Box>
         ))}
-        <Grid container sx={{ mt: 2 }} spacing={2} alignItems="center">
+        <Grid container sx={{ mt: 2, mb: 10 }} spacing={2} alignItems="center">
           <Grid>
             <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleAddExpenseItem}>
               Add
