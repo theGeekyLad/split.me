@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store, { showProgress, hideProgress } from '../store';
 
-const API_URL = 'http://localhost:3001'; // Node backend
+const API_URL = process.env.REACT_APP_SPLIT_ME_BE_URL ?? 'http://localhost:3001'; // Node backend
 
 export const getGroups = async (apiKey) => {
   try {
