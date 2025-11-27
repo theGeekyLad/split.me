@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
 import ExpenseItem from '../ExpenseItem';
+import KeyboardShortcutsDialog from '../KeyboardShortcutsModal';
 import { getGroups, getGroupById, createExpense } from '../services';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -45,6 +46,7 @@ const Home = () => {
   // State for the new dropdown
   const [userDropdownValue, setUserDropdownValue] = useState('');
   const loading = useSelector(state => state.progress.visible);
+  const [openKeyboardShortcutsModal, setOpenKeyboardShortcutsModal] = React.useState(false);
 
   const handleDarkModeToggle = () => {
     setDarkMode((prev) => {
@@ -229,7 +231,7 @@ const Home = () => {
       </Backdrop>
       <Container>
         <Box sx={{ mt: 4, mb: 2, textAlign: 'center' }}>
-          <Typography variant="h4" component="h4">
+          <Typography variant="h4" component="h4" onClick={() => setOpenKeyboardShortcutsModal(true)}>
             Split.me
           </Typography>
         </Box>
@@ -368,6 +370,7 @@ const Home = () => {
           Made with <span style={{ color: 'red' }}>❤️</span> by theGeekyLad
         </Typography>
       </Box>
+      <KeyboardShortcutsDialog open={openKeyboardShortcutsModal} handleClose={() => setOpenKeyboardShortcutsModal(false)} />
     </ThemeProvider>
   );
 };
