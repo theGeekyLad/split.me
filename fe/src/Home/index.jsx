@@ -34,6 +34,7 @@ import store, { showProgress, hideProgress } from '../store';
 
 const Home = () => {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('apiKey') || '');
+  const [openAiApiKey, setOpenAiApiKey] = useState(() => localStorage.getItem('openAiApiKey') || '');
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [group, setGroup] = useState('');
   const [groups, setGroups] = useState([]);
@@ -167,8 +168,13 @@ const Home = () => {
   }
 
   const parseReceiptImage = async (base64Image) => {
+    if (!openAiApiKey || openAiApiKey.trim() === '') {
+      setSnackbar({ open: true, message: 'Open AI API Key is required to parse receipt image', severity: 'error' });
+      return;
+    }
+
     const openai = new OpenAI({
-      apiKey: "",
+      apiKey: openAiApiKey,
       dangerouslyAllowBrowser: true,
     });
 
@@ -209,7 +215,6 @@ const Home = () => {
     });
 
     const result = JSON.parse(response.output_text);
-    console.log(result);
 
     const expenseItems = [];
     result.expenses.forEach(async (expense) => {
@@ -306,22 +311,34 @@ const Home = () => {
             <HelpRounded />
           </IconButton>
         </Box>
-        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
-          <TextField
-            fullWidth
-            label="API Key"
-            variant="outlined"
-            type="text"
-            value={apiKey}
-            onChange={e => {
-              setApiKey(e.target.value);
-              localStorage.setItem('apiKey', e.target.value);
-              setSnackbar({ open: true, message: "Reload page to see changes", severity: 'info' });
-            }}
-          />
-        </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField
+                fullWidth
+                label="Splitwise API Key"
+                variant="outlined"
+                type="text"
+                value={apiKey}
+                onChange={e => {
+                  setApiKey(e.target.value);
+                  localStorage.setItem('apiKey', e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <TextField
+                fullWidth
+                label="Open AI API Key"
+                variant="outlined"
+                type="text"
+                value={openAiApiKey}
+                onChange={e => {
+                  setOpenAiApiKey(e.target.value);
+                  localStorage.setItem('openAiApiKey', e.target.value);
+                }}
+              />
+            </Grid>
             <Grid size={{ xs: 12, md: 2 }}>
               <DatePicker
                 label="Select Date"
@@ -436,7 +453,7 @@ const Home = () => {
       </Container>
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={4000}
+        autoHideDuration={5000}
         onClose={() => setSnackbar(s => ({ ...s, open: false }))}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
