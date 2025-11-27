@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 
@@ -16,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
+import HelpRounded from '@mui/icons-material/HelpRounded';
 import ExpenseItem from '../ExpenseItem';
 import KeyboardShortcutsDialog from '../KeyboardShortcutsModal';
 import { getGroups, getGroupById, createExpense } from '../services';
@@ -24,7 +24,7 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
-import { Box, Backdrop, CircularProgress } from "@mui/material";
+import { Box, Backdrop, CircularProgress, IconButton } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -233,10 +233,13 @@ const Home = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Container>
-        <Box sx={{ mt: 4, mb: 2, textAlign: 'center' }}>
-          <Typography variant="h4" component="h4" onClick={() => setOpenKeyboardShortcutsModal(true)}>
+        <Box sx={{ mt: 4, mb: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Typography variant="h4" component="h4">
             Split.me
           </Typography>
+          <IconButton aria-label="help" onClick={() => setOpenKeyboardShortcutsModal(true)} sx={{ ml: 1 }}>
+            <HelpRounded />
+          </IconButton>
         </Box>
         <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
           <TextField
