@@ -165,6 +165,65 @@ const Home = () => {
     setSnackbar({ open: true, message: finalStatus.toString(), severity: finalStatus === 200 ? 'success' : 'error' });
   }
 
+  const parseReceiptImage = async (base64Image) => {
+    const openai = new OpenAI({
+      apiKey: "",
+      dangerouslyAllowBrowser: true,
+    });
+
+    store.dispatch(showProgress());
+    const response = await openai.responses.create({
+      model: "gpt-4.1-mini",
+      input: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text", text: "\
+                      You're a Billing Receipt Parser bot. Your responsibility is to parse a single receipt image that will be provided to extract metadata about the purchased items.  \
+                      \
+                      Extract the metadata and build a JSON structure as follows for all expense items: \
+                      \
+                      ``` \
+                      interface ExpenseItem { \
+                        cost: String; \
+                        description: String; \
+                      } \
+                      \
+                      interface Result { \
+                        expenses: ExpenseItem[], \
+                        date: String; // Format MM/DD/YYYY \
+                      } \
+                      ``` \
+                      \
+                      Once you build the `Result` JSON object as explained above, return that to the user. Basically, your response should strictly print out a JSON array as string (without code blocks or any formatting). If there is any kind of error such as bad image, or bad user input, or bad entries in the receipt image, just return an empty JSON array."
+            },
+            {
+              type: "input_image",
+              image_url: base64Image,
+            },
+          ],
+        },
+      ],
+    });
+
+    const result = JSON.parse(response.output_text);
+
+    const expenseItems = [];
+    result.expenses.forEach(async (expense) => {
+      expenseItems.push({
+        input1: expense.description,
+        input2: expense.cost,
+      });
+    });
+    setExpenseItems(expenseItems);
+
+    if (result.date)
+      setCalendarValue(dayjs(result.date, 'MM/DD/YYYY'));
+
+    store.dispatch(hideProgress());
+  };
+
   useEffect(() => {
     // Add global keydown listener for Alt+Enter and Alt+E
     const handleKeyDown = (e) => {
@@ -385,32 +444,7 @@ const Home = () => {
       <ImagePicker
         extensions={['jpg', 'jpeg', 'png']}
         dims={{}}
-        onChange={async (base64Image) => {
-          const openai = new OpenAI({
-            apiKey: "",
-            dangerouslyAllowBrowser: true,
-          });
-
-          store.dispatch(showProgress());
-          const response = await openai.responses.create({
-            model: "gpt-4.1-mini",
-            input: [
-              {
-                role: "user",
-                content: [
-                  { type: "input_text", text: "what's in this image?" },
-                  {
-                    type: "input_image",
-                    image_url: base64Image,
-                  },
-                ],
-              },
-            ],
-          });
-          store.dispatch(hideProgress());
-
-          console.log(response.output_text);
-        }}
+        onChange={parseReceiptImage}
         onError={errMsg => { alert(errMsg); }}
       >
         <button>
