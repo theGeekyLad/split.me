@@ -182,6 +182,9 @@ const Home = () => {
             behavior: "smooth",
           });
         }, 0);
+      } else if (e.shiftKey && (e.key === '/' || e.keyCode === 191)) {
+        e.preventDefault();
+        setOpenKeyboardShortcutsModal(true);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
