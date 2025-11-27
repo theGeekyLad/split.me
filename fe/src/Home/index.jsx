@@ -163,7 +163,7 @@ const Home = () => {
   useEffect(() => {
     // Add global keydown listener for Alt+Enter and Alt+E
     const handleKeyDown = (e) => {
-      if (e.altKey && (e.key === 'c' || e.key === 'C' || e.keyCode === 67)) {
+      if (e.altKey && (e.key === 'r' || e.key === 'R' || e.keyCode === 82)) {
         e.preventDefault();
         setTimeout(() => {
           handleAddExpenseItem();
