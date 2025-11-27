@@ -15,6 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import AddIcon from '@mui/icons-material/Add';
+import UploadIcon from '@mui/icons-material/Upload';
 import HelpRounded from '@mui/icons-material/HelpRounded';
 import ExpenseItem from '../ExpenseItem';
 import KeyboardShortcutsDialog from '../KeyboardShortcutsModal';
@@ -208,12 +209,14 @@ const Home = () => {
     });
 
     const result = JSON.parse(response.output_text);
+    console.log(result);
 
     const expenseItems = [];
     result.expenses.forEach(async (expense) => {
       expenseItems.push({
         input1: expense.description,
         input2: expense.cost,
+        userSelectValue: [...members]
       });
     });
     setExpenseItems(expenseItems);
@@ -388,6 +391,18 @@ const Home = () => {
                 label={darkMode ? 'Dark' : 'Light'}
               />
             </Grid>
+            <Grid size={{ xs: 12 }}>
+              <ImagePicker
+                extensions={['jpg', 'jpeg', 'png']}
+                dims={{}}
+                onChange={async (base64Image) => { await parseReceiptImage(base64Image); }}
+                onError={errMsg => { alert(errMsg); }}
+              >
+                <Button variant="contained" color="primary" startIcon={<UploadIcon />} disabled={group === ''}>
+                  Load Receipt Image
+                </Button>
+              </ImagePicker>
+            </Grid>
           </Grid>
         </LocalizationProvider>
         {expenseItems.map((item, idx) => (
@@ -440,17 +455,6 @@ const Home = () => {
       </Box>
 
       <KeyboardShortcutsDialog open={openKeyboardShortcutsModal} handleClose={() => setOpenKeyboardShortcutsModal(false)} />
-
-      <ImagePicker
-        extensions={['jpg', 'jpeg', 'png']}
-        dims={{}}
-        onChange={parseReceiptImage}
-        onError={errMsg => { alert(errMsg); }}
-      >
-        <button>
-          Click to upload image
-        </button>
-      </ImagePicker>
     </ThemeProvider >
   );
 };
