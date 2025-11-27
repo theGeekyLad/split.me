@@ -80,13 +80,13 @@ const ExpenseItem = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid size={{ xs: 6, md: 2 }} sx={{ display: 'flex', justifyContent: 'end' }}>
+      <Grid size={{ xs: 6, md: 2 }} sx={{ display: { xs: 'block', md: 'flex' }, justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
         <FormControlLabel
           control={<Switch checked={isTaxable} onChange={handleIsTaxableChange} />}
           label={'Taxable'}
         />
       </Grid>
-      <Grid size={{ xs: 12, md: 1 }} sx={{ display: 'flex', justifyContent: 'end' }}>
+      <Grid size={{ xs: 6, md: 1 }} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <IconButton onClick={onDelete} aria-label="delete">
           <DeleteIcon />
         </IconButton>

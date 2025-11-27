@@ -249,7 +249,7 @@ const Home = () => {
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Grid container spacing={2} sx={{ mt: 2, mb: 4 }} alignItems="center">
-            <Grid size={{ xs: 6, md: 2 }}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <DatePicker
                 label="Select Date"
                 value={calendarValue}
@@ -257,7 +257,7 @@ const Home = () => {
                 slotProps={{ textField: { fullWidth: true } }}
               />
             </Grid>
-            <Grid size={{ xs: 6, md: 4 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <FormControl fullWidth>
                 <InputLabel id="group-label">Group</InputLabel>
                 <Select
@@ -273,7 +273,7 @@ const Home = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 6, md: 2 }}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <FormControl fullWidth>
                 <InputLabel id="user-dropdown-label">Who Am I</InputLabel>
                 <Select
@@ -294,7 +294,7 @@ const Home = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 6, md: 2 }}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <FormControl fullWidth>
                 <TextField
                   fullWidth
@@ -312,7 +312,7 @@ const Home = () => {
                 />
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 6, md: 2 }}>
+            <Grid size={{ xs: 12, md: 2 }}>
               <FormControlLabel
                 control={<Switch checked={darkMode} onChange={handleDarkModeToggle} />}
                 label={darkMode ? 'Dark' : 'Light'}
