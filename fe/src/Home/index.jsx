@@ -25,6 +25,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 import Typography from '@mui/material/Typography';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const Home = () => {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('apiKey') || '');
@@ -34,6 +35,9 @@ const Home = () => {
   const [calendarValue, setCalendarValue] = useState(dayjs());
   const [expenseItems, setExpenseItems] = useState([]);
   const [members, setMembers] = useState([]);
+  const [taxRate, setTaxRate] = useState(() => {
+    return localStorage.getItem('taxRate') ?? '';
+  });
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === null ? false : stored === 'true';
@@ -155,7 +159,7 @@ const Home = () => {
   useEffect(() => {
     // Add global keydown listener for Alt+Enter and Alt+E
     const handleKeyDown = (e) => {
-      if (e.altKey && (e.key === 'Enter' || e.keyCode === 13)) {
+      if (e.altKey && (e.key === 'c' || e.key === 'C' || e.keyCode === 67)) {
         e.preventDefault();
         setTimeout(() => {
           handleAddExpenseItem();
@@ -249,7 +253,7 @@ const Home = () => {
                 slotProps={{ textField: { fullWidth: true } }}
               />
             </Grid>
-            <Grid size={{ xs: 6, md: 5 }}>
+            <Grid size={{ xs: 6, md: 4 }}>
               <FormControl fullWidth>
                 <InputLabel id="group-label">Group</InputLabel>
                 <Select
@@ -265,7 +269,7 @@ const Home = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid size={{ xs: 6, md: 3 }}>
+            <Grid size={{ xs: 6, md: 2 }}>
               <FormControl fullWidth>
                 <InputLabel id="user-dropdown-label">Who Am I</InputLabel>
                 <Select
@@ -284,6 +288,24 @@ const Home = () => {
                     </MenuItem>
                   ))}
                 </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={{ xs: 6, md: 2 }}>
+              <FormControl fullWidth>
+                <TextField
+                  fullWidth
+                  label="Tax"
+                  variant="outlined"
+                  type="text"
+                  value={taxRate}
+                  onChange={(e) => {
+                    setTaxRate(e.target.value)
+                    localStorage.setItem('taxRate', e.target.value);
+                  }}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                  }}
+                />
               </FormControl>
             </Grid>
             <Grid size={{ xs: 6, md: 2 }}>
