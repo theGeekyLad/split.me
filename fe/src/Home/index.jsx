@@ -27,6 +27,9 @@ import Button from '@mui/material/Button';
 import { Box, Backdrop, CircularProgress, IconButton } from "@mui/material";
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+import { ImagePicker } from 'react-file-picker'
+import OpenAI from "openai";
+import store, { showProgress, hideProgress } from '../store';
 
 const Home = () => {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('apiKey') || '');
@@ -376,8 +379,45 @@ const Home = () => {
           Made with <span style={{ color: 'red' }}>❤️</span> by theGeekyLad
         </Typography>
       </Box>
+
       <KeyboardShortcutsDialog open={openKeyboardShortcutsModal} handleClose={() => setOpenKeyboardShortcutsModal(false)} />
-    </ThemeProvider>
+
+      <ImagePicker
+        extensions={['jpg', 'jpeg', 'png']}
+        dims={{}}
+        onChange={async (base64Image) => {
+          const openai = new OpenAI({
+            apiKey: "",
+            dangerouslyAllowBrowser: true,
+          });
+
+          store.dispatch(showProgress());
+          const response = await openai.responses.create({
+            model: "gpt-4.1-mini",
+            input: [
+              {
+                role: "user",
+                content: [
+                  { type: "input_text", text: "what's in this image?" },
+                  {
+                    type: "input_image",
+                    image_url: base64Image,
+                  },
+                ],
+              },
+            ],
+          });
+          store.dispatch(hideProgress());
+
+          console.log(response.output_text);
+        }}
+        onError={errMsg => { alert(errMsg); }}
+      >
+        <button>
+          Click to upload image
+        </button>
+      </ImagePicker>
+    </ThemeProvider >
   );
 };
 
