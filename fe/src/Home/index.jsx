@@ -93,6 +93,10 @@ const Home = () => {
     handleExpenseItemChange(idx, 'userSelectValue', typeof value === 'string' ? value.split(',') : value);
   };
 
+  const handleIsTaxableChange = (idx, value) => {
+    handleExpenseItemChange(idx, 'isTaxable', value);
+  };
+
   const handleAddExpenseItem = () => {
     setExpenseItems((prev) => [
       ...prev,
@@ -105,7 +109,7 @@ const Home = () => {
       if (e.input2 === '' || e.input1 === '' || e.userSelectValue.length === 0)
         return []; // Skip invalid items
 
-      const total = eval(e.input2).toFixed(2);
+      const total = eval(e.input2).toFixed(2) * (e.isTaxable ? (1 + (parseFloat(taxRate) || 0) / 100) : 1);
 
       const expense = {
         cost: total.toString(),
@@ -322,9 +326,11 @@ const Home = () => {
               input1={item.input1}
               input2={item.input2}
               userSelectValue={item.userSelectValue}
+              isTaxable={item.isTaxable}
               handleInput1Change={e => handleExpenseItemChange(idx, 'input1', e.target.value)}
               handleInput2Change={e => handleExpenseItemChange(idx, 'input2', e.target.value)}
               handleUserSelectChange={e => handleUserSelectChange(idx, e)}
+              handleIsTaxableChange={e => handleIsTaxableChange(idx, e.target.checked)}
               members={members}
               onDelete={() => setExpenseItems(items => items.filter((_, i) => i !== idx))}
             />
